@@ -53,6 +53,10 @@ if __name__ == "__main__":
             if newer(cur_ver, v):
                 installed.append(v)
 
+    if len(installed) == 0:
+        print("Nothing is found.")
+        exit(1)
+
     print("Found installed kernels older than the current one (%s):" % cur_ver)
     for v in installed:
         print(v)
