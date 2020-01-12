@@ -2,7 +2,6 @@
 
 import re
 import subprocess
-import os
 import shutil
 from pathlib import Path
 
@@ -28,7 +27,7 @@ def newer(v1, v2):
 
 def force_delete(path):
     try:
-        os.unlink(path)
+        Path(path).unlink()
     except IsADirectoryError:
         shutil.rmtree(path)
     except FileNotFoundError:
