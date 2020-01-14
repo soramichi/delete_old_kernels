@@ -17,7 +17,7 @@ def newer(v1, v2):
     # v1 and v2 are exactly the same
     if len(v1) == len(v2):
         return False
-    # if v1 is the same as v2 up to len(v2) and still has something, probable v1 is newer
+    # if v1 is the same as v2 up to len(v2) and still has something, probably v1 is newer
     # Example: v1 = "5.4.10.1" vs. v2 = "5.4.10"
     elif len(v1) > len(v2):
         return True
