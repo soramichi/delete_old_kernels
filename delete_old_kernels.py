@@ -4,9 +4,10 @@ import re
 import subprocess
 import shutil
 from pathlib import Path
+from typing import List
 
 # return if v1 is newer than v2
-def newer(v1, v2):
+def newer(v1: str, v2: str) -> bool:
     # compare the version numbers
     for vv in zip(v1.split('.'), v2.split('.')):
         if int(vv[0]) > int(vv[1]):
@@ -33,20 +34,20 @@ def force_delete(path):
     except FileNotFoundError:
         pass
 
-def delete_files(v):
+def delete_files(v: str) -> None:
     files = ["/boot/System.map-", "/boot/config-", "/boot/initrd.img-", "/boot/vmlinuz-", "/lib/modules/"]
     for f in files:
         force_delete(f + v)
 
 if __name__ == "__main__":
-    cur_ver = subprocess.check_output(["uname", "-r"], text=True) # => '5.4.10\n'
+    cur_ver: str = subprocess.check_output(["uname", "-r"], text=True) # => '5.4.10\n'
     cur_ver = cur_ver[0:-1] # delete the tailing '\n'
 
-    installed = []
+    installed: List[str] = []
     p = Path("/lib/modules")
 
     for d in p.iterdir():
-        v = d.parts[-1]
+        v: str = d.parts[-1]
         # matches only "pure" versions, without any suffixes like "-1-amd64"
         if re.fullmatch(r"[1-9]+\.[0-9]+\.[0-9]+", v) != None:
             # collect ones older than cur_ver
@@ -61,7 +62,7 @@ if __name__ == "__main__":
     for v in installed:
         print(v)
     print("\nDo you wish to delete them? [y/n]: ")
-    cmd = input()
+    cmd: str = input()
 
     if cmd == "y" or cmd == "Y":
         for v in installed:
