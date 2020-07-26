@@ -26,7 +26,7 @@ def newer(v1: str, v2: str) -> bool:
     else:
         return False
 
-def force_delete(path):
+def force_delete(path: str):
     try:
         Path(path).unlink()
     except IsADirectoryError:
